@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .ballFather{
+            position: absolute;
+            width: 0.533333rem;
+            height: 0.533333rem;
+            border-radius: 50%;
+            transition: all  0.6s cubic-bezier(1, -0.5, 1, 1);
+        }
+        .ballSon{
+            width: 0.533333rem;
+            height: 0.533333rem;
+            background: #3190e8;
+            border-radius: 50%;
+            transition:all 0.6s linear;
+        }
+        @keyframes ani{
+            0%{transform: scale(0)}
+            20%{transform: scale(1.2)}
+            40%{transform: scale(.8)}
+            80%{transform: scale(1.1)}
+            100%{transform: scale(1)}
+        }
+        .animation{
+            animation: ani .4s linear;
+        }
+        .dian{
+            width:50px;
+            height:50px;
+            background-color: pink;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            margin-left: 260px;
+            
+        }
+        .shopping_footer{
+            width:100px;
+            height:100px;
+            background-color: green;
+            margin-top: 400px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="dian" onclick="newBall(event)">点击</div>
+        <div class="shopping_footer"></div>
+    </div>
+</body>
+</html>
+<script>
+    function newBall(event){//当前点击的元素
+		let div=document.createElement('div');
+		div.className='ballFather';
+		document.body.appendChild(div);
+
+		let sonDiv=document.createElement('div');
+		sonDiv.className='ballSon';
+		div.appendChild(sonDiv);
+
+
+		let top=event.target.getBoundingClientRect().top;//获得 跳动小球top
+		let left=event.target.getBoundingClientRect().left;//获得 left
+		div.style.left=left+'px';
+		div.style.top=top+'px';
+
+		let y = (window.innerHeight - top);// 下落的高度
+		// div.style.display ='';
+		div.style.webkitTransform = `translate3d(0,${y}px,0)`;
+		div.style.transform = `translate3d(0,${y}px,0)`;
+
+		sonDiv.style.webkitTransform = `translate3d(-${left-10}px,0,0)`;
+		sonDiv.style.transform = `translate3d(-${left-10}px,0,0)`;
+		//保证 小球运动结束后，调用购物车的动画
+
+		setTimeout(()=>{
+			// document.body.removeChild(div);
+			document.querySelector('.shopping_footer').classList.add("animation");
+			setTimeout(()=>{
+				document.querySelector('.shopping_footer').classList.remove("animation");
+			},400)
+		},620)
+	}
+</script>
